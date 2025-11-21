@@ -8,6 +8,7 @@ from sqlalchemy import (
     JSON,
     ForeignKey,
     DateTime,
+    UniqueConstraint
 )
 from sqlalchemy.sql import func
 
@@ -52,6 +53,9 @@ class Product(Base):
     supermarket = relationship("Supermarket", back_populates="products")
     history = relationship("PriceHistory", back_populates="product", cascade="all, delete")
 
+    __table_args__ = (
+        UniqueConstraint("supermarket_id", "product_id", name="uq_market_product"),
+    )
 
 class PriceHistory(Base):
     __tablename__ = "price_history"

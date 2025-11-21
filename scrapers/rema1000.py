@@ -57,7 +57,12 @@ def fetch_rema_algolia_hits():
     for result in data.get("results", []):
         all_hits.extend(result.get("hits", []))
 
-    return all_hits
+    # DEDUPE using Algolia objectID (unique per product)
+    unique_hits = {}
+    for hit in all_hits:
+        unique_hits[hit["objectID"]] = hit
+
+    return list(unique_hits.values())
 
 
 def scrape_rema1000_products():
