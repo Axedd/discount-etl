@@ -1,0 +1,56 @@
+# ───────────────────────────────
+# Python
+# ───────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compiled C extensions
+*.so
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# VSCode
+.vscode/
+
+# Byte-compiled
+*.egg-info/
+dist/
+build/
+
+# ───────────────────────────────
+# Environment & Secrets
+# ───────────────────────────────
+.env
+*.env
+
+# ───────────────────────────────
+# Database / Alembic
+# ───────────────────────────────
+alembic/versions/*.pyc
+alembic/versions/__pycache__/
+database/*.db
+*.sqlite3
+
+# ───────────────────────────────
+# Debug & Local Data Dumps
+# ───────────────────────────────
+debug_*.html
+*.log
+
+# JSON output (scraped data dumps)
+*.json
+
+# If you want to keep specific JSON fixtures, whitelist:
+!rema_products.json
+!shop_discounts.json
+
+# ───────────────────────────────
+# OS stuff
+# ───────────────────────────────
+.DS_Store
+Thumbs.db
