@@ -8,7 +8,8 @@ from sqlalchemy import (
     JSON,
     ForeignKey,
     DateTime,
-    UniqueConstraint
+    UniqueConstraint,
+    BigInteger
 )
 from sqlalchemy.sql import func
 
@@ -33,7 +34,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
 
     supermarket_id = Column(Integer, ForeignKey("supermarkets.id"), nullable=False)
-    product_id = Column(Integer, nullable=False)  # supermarket product id
+    product_id = Column(BigInteger, nullable=False)  # supermarket product id
 
     product_name = Column(String)
     description = Column(String)

@@ -1,3 +1,5 @@
+from pipeline.extract.extract_kvickly_price import extract_kvickly_price
+
 def normalize_rema_algolia(hit, supermarket_id):
     pricing = hit.get("pricing", {})
     is_discount = pricing.get("is_on_discount", False)
@@ -33,3 +35,48 @@ def normalize_rema_algolia(hit, supermarket_id):
         "labels": hit.get("labels", []),
         "is_discount": is_discount,
     }
+
+
+def normalize_kvickly_offer(offer, supermarket_id):
+    raw = offer["_raw"]
+    products = offer["products"]
+
+    price = extract_kvickly_price(raw)
+
+    normalized_items = []
+
+    for p in products:
+        try:
+            pid = int(p["id"])
+        except:
+            pid = None
+
+        item = {
+            "supermarket_id": supermarket_id,
+            "product_id": pid,
+
+            # Use individual product title (correct)
+            "product_name": p.get("title"),
+
+            # Use offer description for detailed info (shared)
+            "description": offer.get("description"),
+
+            "category": None,
+
+            "price": price,
+            "old_price": None,
+            "discount_percent": None,
+
+            "unit_price": None,
+            "unit_label": offer.get("quantity"),
+
+            # Individual product image
+            "image_url": p.get("image"),
+
+            "labels": offer.get("labels", []),
+            "is_discount": True,
+        }
+
+        normalized_items.append(item)
+
+    return normalized_items
